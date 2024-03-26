@@ -19,8 +19,8 @@ public class PlayerMovement : Singleton<PlayerMovement>
     void Update()
     {
         CheckGroundHeight(); 
-        MovePlayer(); 
-       
+        MovePlayer();
+        EnsurePlayerNotBelowGround();
     }
     private void CheckGroundHeight()
     {
@@ -57,6 +57,14 @@ public class PlayerMovement : Singleton<PlayerMovement>
         {
             gameObject.transform.forward = movedirection;
             gameObject.transform.GetChild(0).transform.rotation = Quaternion.Euler(0f, 0f, 0f); 
+        }
+    }
+
+    private void EnsurePlayerNotBelowGround()
+    {
+        if (transform.position.y < groundDistance + 0.1f)
+        {
+            transform.position = new Vector3(transform.position.x, groundDistance + 0.1f, transform.position.z);
         }
     }
 }

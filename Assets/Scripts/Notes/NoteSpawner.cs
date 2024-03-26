@@ -7,7 +7,7 @@ public class NoteSpawner : MonoBehaviour
     public GameObject notes; 
     public void spawnNotes()
     {
-        Instantiate(notes, transform.position, transform.rotation); 
+        Instantiate(notes, transform.position, transform.rotation, GameObject.FindGameObjectWithTag("NoteSpawner").transform); 
         //Debug.Log("Spawned a note"); 
     }
 }

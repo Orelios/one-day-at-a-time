@@ -85,6 +85,8 @@ public class PlayerData : Singleton<PlayerData>
         else
         {
             Load();
+            //transform.position = new Vector3(-1.44f, 1.89f, -1.17f);
+            Time.timeScale = 1.0f;
         }
     }
 

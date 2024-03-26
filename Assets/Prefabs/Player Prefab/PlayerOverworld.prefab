@@ -139,8 +139,8 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 1.2268447
-  m_Center: {x: 0, y: -0.32507885, z: 0.61561966}
+  m_Radius: 0.7854916
+  m_Center: {x: 0.03, y: -0.32507887, z: -0.06}
 --- !u!54 &6800218912291206556
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPresist: 0
-  speed: 2
+  speed: 4
   groundDistance: 1.89
   groundLayer:
     serializedVersion: 2
@@ -218,8 +218,8 @@ MonoBehaviour:
   isPresist: 0
   isNewGame: 0
   startMentalHealth: 0
-  mentalHealth: 100
-  maxMentalHealth: 100
+  mentalHealth: 50
+  maxMentalHealth: 50
   startProductivity: 0
   productivity: 0
   maxProductivity: 60

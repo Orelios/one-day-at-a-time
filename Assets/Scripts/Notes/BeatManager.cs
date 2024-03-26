@@ -25,7 +25,7 @@ public class BeatManager : Singleton<BeatManager>
                 (_audioSource.clip.frequency * interval.getIntervalLength(_bpm)));
             interval.CheckForNewInterval(sampledTime); 
         }
-        checkPitch();
+        //checkPitch();
     }
 
     private void checkPitch()

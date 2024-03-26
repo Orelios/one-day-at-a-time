@@ -17212,14 +17212,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1345247387505692616, guid: 2ddcbab6ef905264dab27500c3facc4d, type: 3}
-      propertyPath: groundDistance
-      value: 1.89
-      objectReference: {fileID: 0}
-    - target: {fileID: 2875129566698045660, guid: 2ddcbab6ef905264dab27500c3facc4d, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3562789634407309006, guid: 2ddcbab6ef905264dab27500c3facc4d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.16300106
@@ -17268,10 +17260,6 @@ PrefabInstance:
       propertyPath: popupPlayerInteractText
       value: 
       objectReference: {fileID: 4638442205725251840}
-    - target: {fileID: 6389398355805720824, guid: 2ddcbab6ef905264dab27500c3facc4d, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: ceac3419a63841647972f33ce21be5bf, type: 2}
     - target: {fileID: 6586813215914459603, guid: 2ddcbab6ef905264dab27500c3facc4d, type: 3}
       propertyPath: m_Name
       value: PlayerOverworld

@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PatternManager : Singleton<PatternManager>
 {
     [SerializeField] private Sprite[] _correctArrowSprites; //must be set in inspector UP/DOWN/LEFT/RIGHT
     [SerializeField] private Sprite[] _incorrectArrowSprites; //must be set in inspector UP/DOWN/LEFT/RIGHT/MISS
+    public Sprite blank;
     [SerializeField] private Arrows[] _arrowInputEnums; //for pattern comparison later - can delete if not needed
     public PatternsScriptableObjects[] _patterns;
     [System.NonSerialized] public GameObject _patternCurrent, _patternPreview, _patternSliding;
@@ -23,18 +25,18 @@ public class PatternManager : Singleton<PatternManager>
         _patternPreview = this.gameObject.transform.GetChild(1).gameObject;
         _patternSliding = this.gameObject.transform.GetChild(2).gameObject;
 
-        _slideStartPos = _patternPreview.transform.position;
-        _slideEndPos = _patternCurrent.transform.position;
+        _slideStartPos = _patternPreview.transform.localPosition;
+        _slideEndPos = _patternCurrent.transform.localPosition;
         _slideStartScale = _patternPreview.transform.localScale;
         _slideEndScale = _patternCurrent.transform.localScale;
 
         for (int i = 0; i < _patterns[_patternIndex].iconPatterns.Length; i++)
         {
-            _patternCurrent.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite
+            _patternCurrent.transform.GetChild(i).GetComponent<Image>().sprite
                 = _patterns[_patternIndex].iconPatterns[i].GetComponent<SpriteRenderer>().sprite;
-            _patternPreview.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite
+            _patternPreview.transform.GetChild(i).GetComponent<Image>().sprite
                 = _patterns[_patternIndex + 1].iconPatterns[i].GetComponent<SpriteRenderer>().sprite;
-            _patternSliding.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite
+            _patternSliding.transform.GetChild(i).GetComponent<Image>().sprite
                 = _patterns[_patternIndex + 1].iconPatterns[i].GetComponent<SpriteRenderer>().sprite;
         }
         //StartCoroutine(TestSlide());
@@ -58,7 +60,7 @@ public class PatternManager : Singleton<PatternManager>
             // same as wrong arrow pressed, auto next pattern
             if (_patternIndex < _patterns.Length - 1)
             {
-                _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<SpriteRenderer>().sprite
+                _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<Image>().sprite
                     = _incorrectArrowSprites[x]; //change current ARROW to wrong version
                                                  //Decreases the current tabbed bar. The amoun that is decreased depends on the timing value
                 if (_patterns[_patternIndex].arrowsPattern[_arrowIndex] != arrow) { checkTimingValueDec(); }
@@ -69,7 +71,7 @@ public class PatternManager : Singleton<PatternManager>
             else //last pattern wrong arrow pressed
             {
                 //Debug.Log("miss. loop");
-                _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<SpriteRenderer>().sprite
+                _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<Image>().sprite
                     = _incorrectArrowSprites[x]; //change current ARROW to wrong version
                 if (_patterns[_patternIndex].arrowsPattern[_arrowIndex] != arrow) { checkTimingValueDec(); }
                 LoopPatternArray();
@@ -82,7 +84,7 @@ public class PatternManager : Singleton<PatternManager>
             if (_patterns[_patternIndex].arrowsPattern[_arrowIndex] == arrow)
             {
                 IndicatorAboveImage.Instance.ChangeAboveIndicatorImage();
-                _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<SpriteRenderer>().sprite
+                _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<Image>().sprite
                     = _correctArrowSprites[x];
                 _arrowIndex += 1;
                 checkTimingValueInc();
@@ -93,7 +95,7 @@ public class PatternManager : Singleton<PatternManager>
                 if (_patternIndex < _patterns.Length - 1)
                 {
                     IndicatorAboveImage.Instance.MissChangeAboveIndicatorImage();
-                    _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<SpriteRenderer>().sprite
+                    _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<Image>().sprite
                         = _incorrectArrowSprites[x]; //change current ARROW to wrong version
                                                      //Decreases the current tabbed bar. The amoun that is decreased depends on the timing value
                     if (_patterns[_patternIndex].arrowsPattern[_arrowIndex] != arrow) { checkTimingValueDec(); }
@@ -104,7 +106,8 @@ public class PatternManager : Singleton<PatternManager>
                 else //last pattern wrong arrow pressed
                 {
                     //Debug.Log("incorrect. loop");
-                    _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<SpriteRenderer>().sprite
+                    IndicatorAboveImage.Instance.MissChangeAboveIndicatorImage();
+                    _patternCurrent.transform.GetChild(_arrowIndex).GetComponent<Image>().sprite
                         = _incorrectArrowSprites[x]; //change current ARROW to wrong version
                     if (_patterns[_patternIndex].arrowsPattern[_arrowIndex] != arrow) { checkTimingValueDec(); }
                     LoopPatternArray();
@@ -172,7 +175,7 @@ public class PatternManager : Singleton<PatternManager>
         {
             for (int i = 0; i < _patterns[0].iconPatterns.Length; i++) //uses _patterns[0] because _patternIndex is irrelevant, only needs iconPatterns.Length
             {
-                pattern.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite
+                pattern.transform.GetChild(i).GetComponent<Image>().sprite
                     = _patterns[_patternIndex].iconPatterns[i].GetComponent<SpriteRenderer>().sprite;
             }
         }
@@ -183,7 +186,7 @@ public class PatternManager : Singleton<PatternManager>
                 for (int i = 0; i < _patterns[0].iconPatterns.Length; i++) //uses _patterns[0] because _patternIndex is irrelevant, only needs iconPatterns.Length
                 {
                     //uses _patterns[_patternIndex + 1] to show the "preview" pattern
-                    pattern.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite
+                    pattern.transform.GetChild(i).GetComponent<Image>().sprite
                         = _patterns[_patternIndex + 1].iconPatterns[i].GetComponent<SpriteRenderer>().sprite;
                 }
             }
@@ -192,7 +195,7 @@ public class PatternManager : Singleton<PatternManager>
                 for (int i = 0; i < _patterns[0].iconPatterns.Length; i++) //uses _patterns[0] because _patternIndex is irrelevant, only needs iconPatterns.Length
                 {
                     //uses _patterns[0] to show the first pattern as in a loop
-                    pattern.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite
+                    pattern.transform.GetChild(i).GetComponent<Image>().sprite
                         = _patterns[0].iconPatterns[i].GetComponent<SpriteRenderer>().sprite;
                 }
             }
@@ -209,7 +212,7 @@ public class PatternManager : Singleton<PatternManager>
         //change _correctArrowSprites back to _patterns sprites
         for (int i = 0; i < _patterns[_patternIndex].iconPatterns.Length; i++)
         {
-            pattern.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite
+            pattern.transform.GetChild(i).GetComponent<Image>().sprite
                 = _patterns[_patternIndex].iconPatterns[i].GetComponent<SpriteRenderer>().sprite;
         }
     }
@@ -219,7 +222,7 @@ public class PatternManager : Singleton<PatternManager>
     {
         for (int i = 0; i < _patterns[0].iconPatterns.Length; i++) //uses _patterns[0] because _patternIndex is irrelevant, only needs iconPatterns.Length
         {
-            pattern.transform.GetChild(i).GetComponent<SpriteRenderer>().sprite = null;
+            pattern.transform.GetChild(i).GetComponent<Image>().sprite = blank;
         }
     }
 
@@ -248,13 +251,13 @@ public class PatternManager : Singleton<PatternManager>
         {
             _slideElapsedTime += Time.deltaTime;
             float percentCompleted = _slideElapsedTime / _slideDuration;
-            _patternSliding.transform.position = Vector3.Lerp(_slideStartPos, _slideEndPos, percentCompleted);
+            _patternSliding.transform.localPosition = Vector3.Lerp(_slideStartPos, _slideEndPos, percentCompleted);
             _patternSliding.transform.localScale = Vector3.Lerp(_slideStartScale, _slideEndScale, percentCompleted);
             //when finished, must change position to original and change back to original size
             yield return null;
         }
         //when _patternSliding reaches _patternCurrent position, _patternSliding remove sprites, move back, change size
-        _patternSliding.transform.position = _slideStartPos;
+        _patternSliding.transform.localPosition = _slideStartPos;
         _patternSliding.transform.localScale = _slideStartScale;
         SpawnPattern(_patternCurrent); //gives illusion that _patternSliding becomes new pattern to follow
         SpawnPattern(_patternSliding); //this will be behind _patternPreview

@@ -10,7 +10,8 @@ public class EndOfDayText : MonoBehaviour
     void OnEnable()
     {
         text = GetComponent<TextMeshProUGUI>();
-        text.text = "End of Day " + PlayerData.Instance.day;
+        //text.text = "End of Day " + PlayerData.Instance.day;
+        text.text = "End of Day 1";
 
     }
 }
